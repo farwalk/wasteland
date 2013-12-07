@@ -1,0 +1,10 @@
+The idea is that choices the player can make during the adventure can
+lead them down different paths.  Some of these things are
+mutually exclusive.
+
+So if you rescue the princess you can ransom her to the enemy kingdom
+and that will lead you down the Traitor's Path which may be a long
+or short series of adventures.
+
+Or you could romance the princess and that would take you down the
+Romance Path

@@ -1,0 +1,57 @@
+    <style>
+      body {
+        font-family: 'Sigmar One', serif;
+        font-size: 48px;
+      }
+			
+			#dangerlabeldiv {
+			  font-size:12pt;
+				padding:10px;
+			}
+			
+			#advdiv {
+			  padding:5px;
+				border-style:solid;
+				border-width:1px;
+				background-color:darksalmon;
+			}
+			
+			#dangerdescriptiondiv{
+			  padding:5px;
+				border-style:solid;
+				border-widht:1px;
+				background-color:mediumseagreen;
+				font-size:12pt;														
+			}
+			
+			.dice{
+			  display:none;
+				position:absolute;
+				top: 10px;
+				left:100px;
+			}
+			
+			#mainscreendiv{
+			  width:1024; 
+				height:768; 
+				border-style:solid; 
+				border-width:2px; 
+				top:10px; 
+				left:10px; 
+				background-color:yellow; 
+				display:none;"			
+			}
+			
+			#titlescreendiv{
+        width:1024; 
+				height:768; 
+				border-style:solid; 
+				border-width:2px; 
+				top:10px; 
+				left:10px; 
+				background-color:red; 
+				display:block;"			
+			}
+			
+    </style>
+		

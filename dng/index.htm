@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<title>Untitled</title>
+
+<script src="event.js"></script>
+
+<script src="location.js"></script>
+
+<script language=javascript>
+
+
+
+function setPlayerLocation()
+{
+  tx = locationx[playerlocation] + "px";
+	ty = locationy[playerlocation] + "px";
+	
+  document.getElementById("playerimage").style.left = tx;
+	document.getElementById("playerimage").style.top = ty;
+	
+	tvar = "";
+	tvar = tvar + "<h2>"+playerlocation+"</h2>";
+	tvar = tvar + roomdesc[playerlocation][roomstate[playerlocation]];
+	tvar = tvar + "<BR><BR>";
+	
+	//alert(actiondesc);
+	tvar = tvar + actiondesc;
+	
+	tvar = tvar + "<BR><BR>";
+	for (x=0; x<20; x++)
+	{
+	  if (exitdesc[playerlocation][x])
+		{
+		  if (exitactive[playerlocation][x] == true)
+		  {
+		    //avar = exits[playerlocation][x] + ". " + exitdesc[playerlocation][x];
+		    avar = exitdesc[playerlocation][x];
+		    tvar = tvar + "<input type=button value='"+ avar +"' onclick=gotoLocation("+exits[playerlocation][x]+")><BR>";
+		  }
+		}
+	}
+	document.getElementById("tooldiv").innerHTML = tvar;
+	rvar = "room" + playerlocation;
+	document.getElementById(rvar).style.display = "block";
+	actiondesc = "";
+}
+
+function gotoLocation(tloc)
+{
+  playerlocation = tloc;
+  setPlayerLocation();
+}
+
+
+function atStart()
+{
+  setPlayerLocation();
+}
+
+function doAction(aup)
+{
+  //alert(aup);
+  if (eventaction[aup] == "question")
+  {
+    //alert('question');
+    tvar = eventquestiontext[aup] + "<BR><BR>";
+    for (x=0; x<20; x++)
+    {      
+      if (eventanswer[aup][x])
+      {	
+	tvar = tvar + "<input type=button value='"+eventanswer[aup][x]+"' onclick=parseAction("+aup+","+x+")><BR>"
+      }
+    }
+    actiondesc = tvar;
+    setPlayerLocation();
+  }
+  if (eventaction[aup] == "challenge")
+  {
+    tvar = eventchallengetype[aup] + " challenge<BR><BR>"
+    tvar = tvar + "You must roll a "+eventchallengedifficulty[aup]+" or better.<BR><BR>"
+    tvar = tvar + "<input type=button value='Roll' onClick=rollChallengeDice(aup)>"
+    actiondesc = tvar;
+    setPlayerLocation();
+  }
+}
+
+function rollChallengeDice(aup)
+{
+  rnd = Math.floor(Math.random()*20) + 1;
+  if (rnd >= eventchallengedifficulty[aup])
+  {
+    doAction(eventchallengesucces[aup]);
+  }
+  else
+    {
+      doAction(eventchallengefailure[aup]);
+    }
+}
+
+function parseAction(aup,pup)
+{
+  //alert(eventaction[aup])
+  if (eventaction[aup] == "question")
+  {
+    //alert(eventanswertype[aup][pup])
+    if (eventanswertype[aup][pup] == "action")
+    {
+      doAction(eventansweraction[aup][pup])
+    }
+    if (eventanswertype[aup][pup] == "nothing")
+    {
+      actiondesc = "";
+      setPlayerLocation();
+    }
+  }
+}
+
+function objectClick(oup)
+{
+  //alert(oup);
+	if (objectactive[oup] == true)
+	{
+	  if (objectroom[oup] == playerlocation)
+ 	  {
+		  //alert(objecttext[oup]);
+			actiondesc = objecttext[oup];	  
+			setPlayerLocation();
+			doAction(objectaction[oup]);
+			//alert(actiondesc);
+	  }
+		else
+		  {
+			  alert("You need to be closer to this object to interact with it.");
+			}
+	}
+}
+
+</script>
+
+</head>
+
+<body onload=atStart()>
+
+<div id="tooldiv" style="width:380px; padding:5px;">
+</div>
+
+<div id="mapdiv" style="position:absolute; top:100px; left:400px;">
+
+
+
+<img style="position:absolute; z-index:999;" id="room1" src="images/room1.png" usemap="#room1" border="0" width="396" height="549" alt="" />
+<map id="room1" name="room1">
+<area shape="poly" coords="228,274,240,254,255,253,262,266,254,288," href="javascript:objectClick(0)" alt="eastdoor" title="eastdoor"   />
+<area shape="poly" coords="188,245,150,214,159,184,195,214," href="javascript:objectClick(1)" alt="bookcase" title="bookcase"   />
+<area shape="poly" coords="310,263,319,233,360,236,365,258,348,282,323,288," href="javascript:objectClick(2)" alt="keg" title="keg"   />
+<area shape="poly" coords="114,276,122,256,140,265,148,287,134,302,117,281," href="javascript:objectClick(3)" alt="westdoor" title="westdoor"   />
+<area shape="poly" coords="204,403,252,383,271,394,260,417,214,419," href="javascript:objectClick(4)" alt="wolfshrine" title="wolfshrine"   />
+<area shape="poly" coords="122,474,169,470,190,502,163,523,125,501," href="javascript:objectClick(5)" alt="deadgoblins" title="deadgoblins"   />
+<area shape="poly" coords="189,479,201,448,224,453,227,475,213,497," href="javascript:objectClick(6)" alt="tombdoor" title="tombdoor"   />
+<area shape="poly" coords="302,445,345,431,358,450,310,470," href="javascript:objectClick(7)" alt="slab" title="slab"   />
+<area shape="poly" coords="176,68,196,29,239,37,234,79,197,86," href="javascript:objectClick(8)" alt="shrine" title="shrine"   />
+<area shape="poly" coords="129,66,164,65,168,89,147,99,119,86," href="javascript:objectClick(9)" alt="well" title="well"   />
+<area shape="poly" coords="29,255,53,250,62,263,51,276,34,270," href="javascript:objectClick(10)" alt="trapdoor" title="trapdoor"   />
+</map>
+            
+	
+
+	<img style="position:absolute; display:none;" id="room2" src="images\room2.png">
+	<img style="position:absolute; display:none;" id="room3" src="images\room3.png">
+	<img style="position:absolute; display:none;" id="room4" src="images\room4.png">
+	<img style="position:absolute; display:none;" id="room5" src="images\room5.png">
+	<img style="position:absolute; display:none;" id="room6" src="images\room6.png">
+	<img style="position:absolute; display:none;" id="room7" src="images\room7.png">
+	<img style="position:absolute; display:none;" id="room8" src="images\room8.png">
+	<img style="position:absolute; display:none;" id="room9" src="images\room9.png">
+	
+	<img style="position:absolute;" id="playerimage" src="images\player1.png">
+
+</div>
+
+</body>
+</html>

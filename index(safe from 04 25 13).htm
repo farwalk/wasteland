@@ -1,0 +1,496 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+
+<html>
+<head>
+<title>SoA</title>
+
+
+<link href='http://fonts.googleapis.com/css?family=Sigmar+One' rel='stylesheet' type='text/css'>
+
+<style>
+      body {
+        font-family: 'Sigmar One', serif;
+        font-size: 48px;
+      }
+</style>
+
+		
+<link rel="stylesheet" type="text/css" href="css/soastyle.css">
+		
+<script src="variables.js"></script>		
+
+<script language = javascript>
+
+
+
+numberofscreendivs = 2;
+var screendivname = new Array();
+screendivname[0] = "mainscreendiv";
+screendivname[1] = "titlescreendiv";
+
+dangerup = 0;
+maxdangerdivs = 10;
+var dangerdivx = new Array();
+var dangerdivy = new Array();
+for (x=0; x<100; x++)
+{
+  dangerdivx[x] = new Array();
+	dangerdivy[x] = new Array();
+}
+
+//testing
+dangerdivx[0][0] = 100;
+dangerdivy[0][0] = 100;
+dangerdivx[0][1] = 300;
+dangerdivy[0][1] = 300;
+dangerdivx[0][2] = 500;
+dangerdivy[0][2] = 500;
+
+//end testing
+
+
+function atStart()
+{
+  setNames();
+}
+
+function setNames()
+{
+    for (x=0; x<=2; x++)
+		{
+		  tvar=Math.floor(Math.random()*dp_number_of_first_names)
+      dp_first_name[x] = dp_base_first_name[tvar];
+			tvar=Math.floor(Math.random()*dp_number_of_last_names)
+      dp_last_name[x] = dp_base_last_name[tvar];
+			tvar=Math.floor(Math.random()*7)
+      dp_style[x] = tvar;
+			tvar=Math.floor(Math.random()*7)
+      dp_role[x] = tvar;
+      dp_dice[x][0] = 12;
+      dp_dice[x][1] = 10;
+      dp_dice[x][2] = 8;
+      dp_dice[x][3] = 8;
+      dp_dice[x][4] = 6;
+      dp_dice[x][5] = 6;
+      dp_dice[x][6] = 6;
+      dp_dice[x][7] = 4;
+      tx = dp_dice[x][tvar];
+      dp_dice[x][tvar] = 12;
+      if (tvar != 0)
+		  {
+        dp_dice[x][0] = tx;
+			}
+    }
+}
+
+
+function setupMainDiv()
+{
+
+  for (x=0; x<maxdangerdivs; x++)
+	{
+	  if (dangerdivx[dangerup][x] > 0)
+		{
+		  tvar = "dangerdiv" + x;
+			//alert(tvar);
+			document.getElementById(tvar).style.display = "block";
+			dvar = dangerdivx[dangerup][x] + "px";
+			document.getElementById(tvar).style.top = dvar;
+			dvar = dangerdivy[dangerup][x] + "px";
+			//alert(dvar);
+			document.getElementById(tvar).style.left = dvar; 
+			 
+		}
+	}
+
+}
+
+function hideAllDivs()
+{
+  for (x=0; x<numberofscreendivs; x++)
+	{
+	  document.getElementById(screendivname[x]).style.display = "none";
+	}
+	
+	//hide dice images
+	for (x=0; x<=20; x++)
+	{
+	  tvar = "die" + x;
+	  document.getElementById(tvar).style.display = "none";
+	}
+
+}
+
+function resetDice()
+{
+  for (x=0; x<=20; x++)
+	{
+	  dp_current_dice_pool[x] = 0;
+		dp_current_dice_result[x] = 0;
+		
+	  tvar = "die" + x;
+	  document.getElementById(tvar).style.display = "none";		
+	}
+}
+
+/*
+choice path is as follows:
+player clicks on a div that has a challege in it
+dangerDivClick(x)
+selectCharacter()
+selectTrait()
+confirmTrait()
+updateDice()
+selectTrait()
+on Next -> setTrait()
+selectItems()
+setItem() <- back to selectItems()
+on Next ->
+*/
+
+function selectTrait()
+{
+	hvar = "";
+
+  hvar = hvar + dp_challenge_text;
+	
+	hvar = hvar + dp_hero_text[dp_character_up];	
+	
+	hvar = hvar + "<BR>";
+  hvar = hvar + "Select a trait to use for this challenge!";
+	for (x=0; x<=7; x++)
+	{
+	  hvar = hvar + "<div id='advdiv' onclick=confirmTrait("+x+")>";
+		hvar = hvar + "<font style='color:darkblue; font-size:12pt;'>";
+		hvar = hvar + "d" + dp_dice[dp_character_up][x] + ", " + dp_base_role[x];
+		hvar = hvar + "</font>";
+		hvar = hvar + "</div>";
+	}
+	
+	if (dp_trait_selected >= 0)
+	{
+	  hvar = hvar + "<font style='font-size:14pt;'>";
+	  hvar = hvar + dp_threat_trait_text[dp_threat_up][dp_challenge_up][dp_trait_selected];
+		hvar = hvar + "</font>";
+	}
+	
+	hvar = hvar + "<table style='width:100%; border-style:solid; border-width:0px;'>";
+	hvar = hvar + "<tr>";
+	hvar = hvar + "<td>";
+	hvar = hvar + "<a href='javascript:dangerDivClick("+dp_challenge_up+")'>Back</a>";
+	hvar = hvar + "</td>";	
+	hvar = hvar + "<td style='text-align:right;'>";
+	hvar = hvar + "<a href='javascript:setTrait()'>Next</a>";
+	hvar = hvar + "</td>";
+	
+	hvar = hvar + "</tr>";
+	hvar = hvar + "</table>"
+	
+	document.getElementById("dangerlabeldiv").innerHTML = hvar;
+}
+
+function setTrait()
+{
+  for (x=0; x<=8; x++)
+	{
+	  itemused[x] = -1;
+	}
+	totalitemsused = 0;
+  selectItems();
+}
+
+function setItem(iup)
+{
+		  if (itemused[iup] == -1)
+			{
+			  if (totalitemsused < 3)
+				{
+		      totalitemsused = totalitemsused + 1;
+			    itemused[iup] = 1;
+				}
+				else
+				  {
+					  alert("too many items");
+					}
+			}
+			else
+			  {
+				  totalitemsused = totalitemsused - 1;
+					itemused[iup] = -1;
+				}
+
+	if (totalitemsused == 0)
+	{
+	  dp_current_dice_pool[1] = 0;
+		dp_current_dice_pool[2] = 0;
+		dp_current_dice_pool[3] = 0;
+	}
+	if (totalitemsused == 1)
+	{
+	  dp_current_dice_pool[1] = 10;
+		dp_current_dice_pool[2] = 0;
+		dp_current_dice_pool[3] = 0;	
+	}
+	if (totalitemsused == 2)
+	{
+	  dp_current_dice_pool[1] = 10;
+		dp_current_dice_pool[2] = 8;
+		dp_current_dice_pool[3] = 0;		
+	}
+	if (totalitemsused == 3)
+	{
+	  dp_current_dice_pool[1] = 10;
+		dp_current_dice_pool[2] = 8;
+		dp_current_dice_pool[3] = 6;		
+	}
+	updateDice();
+	selectItems();
+}
+
+function selectItems()
+{
+	hvar = "";
+
+  hvar = hvar + dp_challenge_text;
+	
+	hvar = hvar + dp_hero_text[dp_character_up];	
+	
+	hvar = hvar + "<BR>";
+  hvar = hvar + "Would you like to use up to two items?";
+	for (x=0; x<=8; x++)
+	{
+	  hvar = hvar + "<div id='advdiv' onclick=setItem("+x+")>";
+		if (itemused[x] > -1)
+		{
+		  hvar = hvar + "<img src='images\\check.png'>";
+		}
+		hvar = hvar + "<font style='color:darkblue; font-size:12pt;'>";
+		hvar = hvar + dp_base_role_ability_name[dp_role[dp_character_up]][x];		
+		hvar = hvar + "</font>";
+		//alert(itemused[x]);
+		if (itemused[x] > -1)
+		{
+		  hvar = hvar + "<BR>";
+			//hvar = hvar + "<table style='width:100%'><tr><td>zzz</td><td>";
+		  hvar = hvar + "<font style='color:red; font-size:10pt;'>";
+		  hvar = hvar + dp_base_role_ability_text[dp_role[dp_character_up]][x];					
+		  hvar = hvar + "</font>"; 
+			//hvar = hvar = "</td></tr></table>";
+		}
+		hvar = hvar + "</div>";
+	}
+	
+	
+	hvar = hvar + "<table style='width:100%; border-style:solid; border-width:0px;'>";
+	hvar = hvar + "<tr>";
+	hvar = hvar + "<td>";
+	hvar = hvar + "<a href='javascript:dangerDivClick("+dp_challenge_up+")'>Back</a>";
+	hvar = hvar + "</td>";	
+	hvar = hvar + "<td style='text-align:right;'>";
+	hvar = hvar + "<a href='javascript:selectItems()'>Next</a>";
+	hvar = hvar + "</td>";
+	
+	hvar = hvar + "</tr>";
+	hvar = hvar + "</table>"
+	
+	document.getElementById("dangerlabeldiv").innerHTML = hvar;  
+}
+
+function updateDice()
+{
+  for (x=0; x<=20; x++)
+	{
+	  if (dp_current_dice_pool[x] > 0)
+		{
+		  tvar = "die" + x; 
+		  dvar = "images\\d" + dp_current_dice_pool[x] + ".png";
+			//alert(dvar);
+			document.getElementById(tvar).src = dvar;
+			pvar = x * 50 + 160;
+			pvar = pvar + "px";
+			document.getElementById(tvar).style.left = pvar;
+			document.getElementById(tvar).style.display = "block";
+		}
+		else
+		  {
+			  tvar = "die" + x; 
+			  document.getElementById(tvar).style.display = "none";
+			}
+	}
+	//alert(dp_current_dice_pool);
+}
+
+function confirmTrait(tselected)
+{
+  dp_trait_selected = tselected;
+	//set dice for trait selected
+	dp_current_dice_pool[0] = dp_dice[dp_character_up][dp_trait_selected];
+	updateDice();
+	//alert(dp_trait_selected);
+	selectTrait();	
+}
+
+
+function dangerDivClick(divclicked)
+{
+  //alert(divclicked);
+	
+	dp_trait_selected = -1;
+	dp_challenge_up = divclicked;
+	tvar = "dangerdiv" + divclicked;
+	dvar = parseInt(document.getElementById(tvar).style.left);
+	//alert(dvar);
+	wvar = parseInt(document.getElementById(tvar).style.width);
+	//alert(wvar);
+	dvar = dvar + wvar;
+	thold = dvar;
+	dvar = dvar + "px";
+	
+	hvar = "";
+	
+	dp_challenge_text = "";
+	dp_challenge_text = dp_challenge_text + "<font style='color:red; font-size:28pt;'>";
+	dp_challenge_text = dp_challenge_text + dp_threat_name[dp_threat_up][divclicked];
+	dp_challenge_text = dp_challenge_text + "</font>";
+	dp_challenge_text = dp_challenge_text + "<BR>";
+	dp_challenge_text = dp_challenge_text + dp_threat_description[dp_threat_up][divclicked];
+	
+	hvar = hvar + dp_challenge_text;
+	
+	document.getElementById("dangerlabeldiv").style.left = dvar;
+	//dvar = document.getElementById(tvar).style.top;
+	dvar = 50;
+	document.getElementById("dangerlabeldiv").style.top = dvar;  
+
+	hvar = hvar + "<BR>";
+  hvar = hvar + "Select the hero that will face this challenge!";
+	
+	for (x=0; x<=2; x++)
+	{
+	  dp_hero_text[x] = "";
+	  dp_hero_text[x] = dp_hero_text[x] + "<div id='advdiv' onclick=selectCharacter("+x+")>";
+		dp_hero_text[x] = dp_hero_text[x] + "<font style='color:darkblue; font-size:18pt;'>";
+		dp_hero_text[x] = dp_hero_text[x] + dp_first_name[x] + " " + dp_last_name[x];
+		dp_hero_text[x] = dp_hero_text[x] + "</font>";
+		dp_hero_text[x] = dp_hero_text[x] + ", ";
+		dp_hero_text[x] = dp_hero_text[x] + "<font style='color:olive; font-size:12pt;'>";
+		dp_hero_text[x] = dp_hero_text[x] + dp_base_style[dp_style[x]] + " " + dp_base_role[dp_role[x]];
+		dp_hero_text[x] = dp_hero_text[x] + "</font>";
+		dp_hero_text[x] = dp_hero_text[x] + "</div>";
+		//alert(dp_hero_text[x]);
+	}
+	
+	for (x=0; x<=2; x++)
+	{
+	  hvar = hvar + dp_hero_text[x];
+	}
+	
+	document.getElementById("dangerlabeldiv").innerHTML = hvar;
+	
+	document.getElementById("dangerlabeldiv").style.display = "block";
+	
+	
+}
+
+function selectCharacter(charup)
+{
+  dp_character_up = charup;
+	selectTrait();
+}
+
+function startGame()
+{
+  hideAllDivs();
+	resetDice();
+	dangerup = 0;
+	setupMainDiv();
+	document.getElementById("mainscreendiv").style.display = "block";
+}
+
+</script>
+
+
+</head>
+<body onload=atStart()>
+
+<div id="mainscreendiv" >
+
+<div id="dangerdiv0" class="dangerdiv" style="position:absolute; width:100px;" onclick=dangerDivClick(0)>
+  <img id="dangerimg0" src="images\gorilla.png">
+	<div id="dangerdescdiv0" style="display:none;"></div>
+</div>
+
+<div id="dangerdiv1" class="dangerdiv" style="position:absolute; width:100px;" onclick=dangerDivClick(1)>
+  <img id="dangerimg1" src="images\gorilla.png">
+	<div id="dangerdescdiv1" style="display:none;"></div>
+</div>
+
+<div id="dangerdiv2" class="dangerdiv" style="position:absolute; width:100px;" onclick=dangerDivClick(2)>
+  <img id="dangerimg2" src="images\gorilla.png">
+	<div id="dangerdescdiv2" style="display:none;"></div>
+</div>
+
+<div id="dangerdiv3" class="dangerdiv" style="position:absolute; width:100px;" onclick=dangerDivClick(3)>
+  <img id="dangerimg3" src="images\gorilla.png">
+	<div id="dangerdescdiv3" style="display:none;"></div>
+</div>
+
+<div id="dangerlabeldiv" >
+</div>
+
+<div id="dangerdescriptiondiv" style="position:absolute; width:300px; border-style:solid; border-width:1px; background-color:cyan; display:none;">
+</div>
+
+
+<div id="dicediv">
+<img id="die0" class="dice" src="images\d4.png">
+<img id="die1" class="dice" src="images\d4.png">
+<img id="die2" class="dice" src="images\d4.png">
+<img id="die3" class="dice" src="images\d4.png">
+<img id="die4" class="dice" src="images\d4.png">
+<img id="die5" class="dice" src="images\d4.png">
+<img id="die6" class="dice" src="images\d4.png">
+<img id="die7" class="dice" src="images\d4.png">
+<img id="die8" class="dice" src="images\d4.png">
+<img id="die9" class="dice" src="images\d4.png">
+<img id="die10" class="dice" src="images\d4.png">
+<img id="die11" class="dice" src="images\d4.png">
+<img id="die12" class="dice" src="images\d4.png">
+<img id="die13" class="dice" src="images\d4.png">
+<img id="die14" class="dice" src="images\d4.png">
+<img id="die15" class="dice" src="images\d4.png">
+<img id="die16" class="dice" src="images\d4.png">
+<img id="die17" class="dice" src="images\d4.png">
+<img id="die18" class="dice" src="images\d4.png">
+<img id="die19" class="dice" src="images\d4.png">
+<img id="die20" class="dice" src="images\d4.png">
+<div style="position:absolute; top:4px; left:4px; border-style:solid; border-width:1px; background-color:plum; font-size:12pt; width:150px;">Dice Pool</div>
+</div>
+
+</div>
+
+
+<div id="titlescreendiv" >
+Spirit of Adventure
+
+<div style="border-style:solid; border-width:1px; width:200px; height:50px; top:350px; left:400px; background-color:yellow; position:absolute;" onclick=startGame()>
+
+<font style="font-size:16pt;">
+<center>	
+	Start Game
+</center>
+</font>		
+
+</div>
+
+
+
+</div>
+
+
+
+</body>
+</html>

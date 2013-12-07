@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<html>
+<head>
+<title>Untitled</title>
+
+<script type="text/javascript" src="js/gm_variables.js"></script>
+
+<script language=javascript>
+
+function atStart()
+{
+  t = gm_intro[1];
+	gmSays(t);
+	//alert('after');
+	//t = player_intro[1];
+	//playerSays(t);
+	playerChoice(player_intro);
+}
+
+function gmSays(t)
+{
+  t = replaceText(t);
+  document.getElementById("gmtextdiv").innerHTML = t;
+}
+
+function replaceText(t)
+{
+  t=t.replace("$player_name",player_name);
+	t=t.replace("$gm_name",gm_name);   
+  return t;
+}
+
+function playerChoice(choices)
+{
+  
+	dtext = "";
+	for (x=0; x<=choices.length-1; x++)
+	{
+	  dtext = dtext + "<div style='border-width:1px; border-style:solid; padding:5px; background-color:salmon;' onclick=clickChoice('"+x+"')>";
+		t = replaceText(choices[x])
+		dtext = dtext + t;
+		dtext = dtext + "</div>";
+	}
+	document.getElementById("playertextdiv").innerHTML = dtext;
+	//alert('in');
+}
+
+function clickChoice(c)
+{
+  alert(c);
+}
+
+function playerSays(t)
+{
+  //alert('test');
+  t=t.replace("$player_name",player_name);
+	t=t.replace("$gm_name",gm_name);
+	document.getElementById("playertextdiv").innerHTML = t;
+}
+
+</script>
+
+
+</head>
+<body onload=atStart()>
+
+<div  id="screendiv" style="border-style:solid; border-width:1px; width:1024px; height:768px;">
+
+<div id="gmimagediv" style="border-style:solid; border-width: 1px; width:100px; height:100px; position:absolute; top: 20px; left:20px; background-color:salmon;">
+GM
+</div>
+<div id="gmtextdiv" style="border-style:solid; border-width: 1px; width:600px; height:100px; position:absolute; top: 130px; left:130px; background-color:white;">
+GM Text
+</div>
+
+<div id="playerimagediv" style="border-style:solid; border-width: 1px; width:100px; height:100px; position:absolute; top: 658px; left:914px; background-color:cornflowerblue;">
+Player
+</div>
+<div id="playertextdiv" style="border-style:solid; border-width: 1px; width:600px; height:100px; position:absolute; top: 548px; left:304px; background-color:white;">
+Player Text
+</div>
+
+<div id="mapdiv" style="border-style:solid; border-width:1px; position:absolute; top:50px; left:50px; width:920px; height:670px; background-color:goldenrod; z-index:-100;">
+Map
+</div>
+
+
+</div>
+
+</body>
+</html>
