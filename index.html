@@ -390,13 +390,34 @@ function showDebug()
 	tvar = tvar + "osx: " + zx + "<BR>";
 	tvar = tvar + "osy: " + zy + "<BR>";	
 	
-	tvar = tvar + "<input type='button' onclick=moveMap() value='Test' >"
-        tvar = tvar + "<input type='button' onclick=drawHexMap() value='hexdraw' >"
+	tvar = tvar + "<input type='button' onclick=moveMap() value='Test' >"<BR>
+        tvar = tvar + "<input type='button' onclick=drawHexMap() value='hexdraw' >"<BR>
+        tvar = tvar + "<input type='button' onclick=goNE() value='go NE' >"<BR>
 
 	
 	document.getElementById("debugdiv").innerHTML = tvar;
 }
 
+
+function goNE()
+{
+			if (isOdd(mapx) == true)
+			{
+		    mapx = mapx + 1;
+			  mapy = mapy + 0;																										
+			}
+			else
+			  {
+		      mapx = mapx + 1;
+			    mapy = mapy - 1;				
+				}
+			playerfacing = 3;
+			//positionMap();
+			checkMove();
+			moveMap();
+			revealFog();
+
+}
 
 function eraseFog(fy,fx)
 {
