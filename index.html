@@ -67,11 +67,12 @@ function drawHexMap()
 	for (x=0; x<1600; x++)
 	{
 	  tvar = "maptile"+ycount+"-"+xcount;
-	  fvar = "tiles/hexes/" + mapdata[x] + ".png";
-          fvar = "tiles/hexes/ocean.png";
-          fvar = "tiles/hexes/" + mapdata[0] + ".png";
-          zvar = "ocean.png";
-          fvar = "tiles/hexes/" + zvar;
+	  zvar = mapdata[x].toLowerCase();
+	  fvar = "tiles/hexes/" + zvar + ".png";
+          //fvar = "tiles/hexes/ocean.png";
+          //fvar = "tiles/hexes/" + mapdata[0] + ".png";
+          //zvar = "ocean.png";
+          //fvar = "tiles/hexes/" + zvar;
           //alert(fvar);
 		document.getElementById(tvar).src = fvar;
 		ycount = ycount + 1;
