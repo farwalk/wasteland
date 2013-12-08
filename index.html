@@ -70,7 +70,7 @@ function drawHexMap()
 	  fvar = "tiles/hexes/" + mapdata[x] + ".png";
           fvar = "tiles/hexes/ocean.png";
           fvar = "tiles/hexes/" + mapdata[0] + ".png";
-          zvar = "ocean.png";
+          zvar = mapdata[x] + ".png";
           fvar = "tiles/hexes/" + zvar;
           //alert(fvar);
 		document.getElementById(tvar).src = fvar;
