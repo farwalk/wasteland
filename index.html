@@ -253,6 +253,8 @@ document.addEventListener('keyup', function(event) {
 		if (event.keyCode == 99)
 		{
 		  //southeast
+			goSE();
+			/*
 			if (isOdd(mapx) == true)
 			{
 		    mapx = mapx + 1;
@@ -268,10 +270,13 @@ document.addEventListener('keyup', function(event) {
 			checkMove();
 			moveMap();
 			revealFog();
+			*/
 		}
 		if (event.keyCode == 103)
 		{
 		  //northwest
+			goNW();
+			/*
 			if (isOdd(mapx) == true)
 			{
 		    mapx = mapx - 1;
@@ -287,10 +292,13 @@ document.addEventListener('keyup', function(event) {
 			checkMove();
 			moveMap();
 			revealFog();
+      */			
 		}
 		if (event.keyCode == 105)
 		{
 		  //northeast
+			goNE();
+			/*
 			if (isOdd(mapx) == true)
 			{
 		    mapx = mapx + 1;
@@ -306,10 +314,13 @@ document.addEventListener('keyup', function(event) {
 			checkMove();
 			moveMap();
 			revealFog();
+			*/
 		}
 		if (event.keyCode == 97)
 		{
 		  //southwest
+			goSW();
+			/*
 			if (isOdd(mapx) == true)
 			{
 		    mapx = mapx - 1;
@@ -325,10 +336,13 @@ document.addEventListener('keyup', function(event) {
 			checkMove();
 			moveMap();
 			revealFog();
+			*/
 		}
 		if ((event.keyCode == 98) || (event.keyCode == 40))
 		{
 		  //south
+			goS();
+			/*
 		  mapx = mapx + 0;
 			mapy = mapy + 1;
 			playerfacing = 1;
@@ -336,10 +350,13 @@ document.addEventListener('keyup', function(event) {
 			checkMove();
 			moveMap();
 			revealFog();
+			*/
 		}
 		if ((event.keyCode == 104) || (event.keyCode == 38))
 		{
 		  //north
+			goN();
+			/*
 		  mapx = mapx + 0;
 			mapy = mapy - 1;
 			playerfacing = 2;
@@ -347,6 +364,7 @@ document.addEventListener('keyup', function(event) {
 			checkMove();
 			moveMap();
 			revealFog();
+			*/
 		}
 		/*
 		if ((event.keyCode == 100) || (event.keyCode == 37))
@@ -407,22 +425,94 @@ function showDebug()
 
 function goNE()
 {
-			if (isOdd(mapx) == true)
-			{
-		    mapx = mapx + 1;
-			  mapy = mapy + 0;																										
-			}
-			else
-			  {
-		      mapx = mapx + 1;
-			    mapy = mapy - 1;				
-				}
-			playerfacing = 3;
-			//positionMap();
-			checkMove();
-			moveMap();
-			revealFog();
+  if (isOdd(mapx) == true)
+	{
+    mapx = mapx + 1;
+	  mapy = mapy + 0;																										
+	}
+	else
+	  {
+		  mapx = mapx + 1;
+			mapy = mapy - 1;				
+		}
+	playerfacing = 3;
+	checkMove();
+	moveMap();
+	revealFog();
+}
 
+function goSE()
+{
+  if (isOdd(mapx) == true)
+	{
+	  mapx = mapx + 1;
+	  mapy = mapy + 1;																			
+	}
+	else
+	{
+	  mapx = mapx + 1;
+		mapy = mapy + 0;			
+	}
+	playerfacing = 1;
+	checkMove();
+	moveMap();
+	revealFog();
+}
+
+function goNW()
+{
+  if (isOdd(mapx) == true)
+	{
+	  mapx = mapx - 1;
+	  mapy = mapy - 0;			  
+	}
+	else
+	  {
+		  mapx = mapx - 1;
+			mapy = mapy - 1;				
+		}
+	playerfacing = 2;
+	checkMove();
+	moveMap();
+	revealFog();
+}
+
+function goSW()
+{
+  if (isOdd(mapx) == true)
+	{
+	  mapx = mapx - 1;
+	  mapy = mapy + 1;																			
+	}
+	else
+	  {
+		  mapx = mapx - 1;
+			mapy = mapy + 0;			
+		}
+	playerfacing = 0;
+	checkMove();
+	moveMap();
+	revealFog();
+}
+
+function goS()
+{
+  mapx = mapx + 0;
+	mapy = mapy + 1;
+	playerfacing = 1;
+	checkMove();
+	moveMap();
+	revealFog();
+}
+
+function goN()
+{
+  mapx = mapx + 0;
+	mapy = mapy - 1;
+	playerfacing = 2;
+	checkMove();
+	moveMap();
+	revealFog();
 }
 
 function eraseFog(fy,fx)
@@ -471,7 +561,13 @@ function atStart()
 <div id='debugdiv' style='position:absolute; top:10px; left:700px; width:300px; height:800; border-style:solid; border-width:1px; background-color:#ffffff'>
 </div>
 
-<div id='nwclickdiv' style='position:absolute; top:0px; left:0px; width:100px; height:100px; background-color:blue; z-index:10000;' onclick="alert('div clicked');" onclick="alert('div touched');" ></div>
+<div id='nwclickdiv' style='position:absolute; top:0px; left:0px; border-width:0px; border-style:solid; border-color:yellow; width:212px; height:442px; z-index:10000;' onclick="goNW();"  ></div>
+<div id='northclickdiv' style='position:absolute; top:0px; left:212px; border-width:0px; border-style:solid; border-color:orange; width:212px; height:442px; z-index:10000;' onclick="goN();"  ></div>
+<div id='neclickdiv' style='position:absolute; top:0px; left:424px; border-width:0px; border-style:solid; border-color:red; width:212px; height:442px; z-index:10000;' onclick="goNE();"  ></div>
+
+<div id='swclickdiv' style='position:absolute; top:442px; left:0px; border-width:0px; border-style:solid; border-color:orange; width:212px; height:442px; z-index:10000;' onclick="goSW();"  ></div>
+<div id='southclickdiv' style='position:absolute; top:442px; left:212px; border-width:0px; border-style:solid; border-color:red; width:212px; height:442px; z-index:10000;' onclick="goS();"  ></div>
+<div id='swclickdiv' style='position:absolute; top:442px; left:424px; border-width:0px; border-style:solid; border-color:yellow; width:212px; height:442px; z-index:10000;' onclick="goSE();"  ></div>
 
 
 
