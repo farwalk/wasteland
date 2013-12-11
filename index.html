@@ -169,6 +169,22 @@ function buildMap()
 	
 }
 
+function revealMap()
+{
+  for (y=0; y<mapsizey; y++)
+	{
+	  for (x=0; x<mapsizex; x++)
+		{
+		  mapfog[y][x] = false;		
+	    fvar = "mapfog"+y+"-"+x;
+	    document.getElementById(fvar).style.display = "none";							
+		}
+	}
+	checkMove();
+	moveMap();
+	revealFog();
+}
+
 function checkMove()
 {
   if ((mapx < 0) || (mapx >= mapsizex))
@@ -235,7 +251,9 @@ document.addEventListener('keyup', function(event) {
 
 		if (event.keyCode == 82)
 		{
-		  //r - reveal map			
+		  //r - reveal map
+			revealMap();
+			/*			
 			for (y=0; y<mapsizey; y++)
 			{
 			  for (x=0; x<mapsizex; x++)
@@ -248,6 +266,7 @@ document.addEventListener('keyup', function(event) {
 			checkMove();
 			moveMap();
 			revealFog();
+			*/
     }		
 		
 		if (event.keyCode == 99)
@@ -414,7 +433,7 @@ function showDebug()
 	tvar = tvar + "osx: " + zx + "<BR>";
 	tvar = tvar + "osy: " + zy + "<BR>";	
 	
-	tvar = tvar + "<input type='button' onclick=moveMap() value='Test' ><BR>"
+	tvar = tvar + "<input type='button' onclick=revealMap() value='Reveal Map' ><BR>"
         tvar = tvar + "<input type='button' onclick=drawHexMap() value='hexdraw' ><BR>"
         tvar = tvar + "<input type='button' onclick=goNE() value='go NE' ><BR>zzz"
 
@@ -425,6 +444,8 @@ function showDebug()
 
 function goNE()
 {
+  oldmapx = mapx;
+	oldmapy = mapy;
   if (isOdd(mapx) == true)
 	{
     mapx = mapx + 1;
@@ -443,6 +464,8 @@ function goNE()
 
 function goSE()
 {
+  oldmapx = mapx;
+	oldmapy = mapy;
   if (isOdd(mapx) == true)
 	{
 	  mapx = mapx + 1;
@@ -461,6 +484,8 @@ function goSE()
 
 function goNW()
 {
+  oldmapx = mapx;
+	oldmapy = mapy;
   if (isOdd(mapx) == true)
 	{
 	  mapx = mapx - 1;
@@ -479,6 +504,8 @@ function goNW()
 
 function goSW()
 {
+  oldmapx = mapx;
+	oldmapy = mapy;
   if (isOdd(mapx) == true)
 	{
 	  mapx = mapx - 1;
@@ -497,6 +524,8 @@ function goSW()
 
 function goS()
 {
+  oldmapx = mapx;
+	oldmapy = mapy;
   mapx = mapx + 0;
 	mapy = mapy + 1;
 	playerfacing = 1;
@@ -507,6 +536,8 @@ function goS()
 
 function goN()
 {
+  oldmapx = mapx;
+	oldmapy = mapy;
   mapx = mapx + 0;
 	mapy = mapy - 1;
 	playerfacing = 2;
