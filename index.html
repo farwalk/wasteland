@@ -40,6 +40,15 @@ window.addEventListener('load', function(){
   e.preventDefault();
  }, false)
  
+ swclickdiv.addEventListener('touchend', function(e){
+  var touchobj = e.changedTouches[0]; // reference first touch point for this event  
+	goSW();
+  e.preventDefault();
+ }, false)
+ 
+ 
+ 
+ 
 }, false)
  
  
