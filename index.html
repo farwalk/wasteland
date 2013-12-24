@@ -46,7 +46,29 @@ window.addEventListener('load', function(){
   e.preventDefault();
  }, false)
  
+ southclickdiv.addEventListener('touchend', function(e){
+  var touchobj = e.changedTouches[0]; // reference first touch point for this event  
+	goS();
+  e.preventDefault();
+ }, false)
  
+ neclickdiv.addEventListener('touchend', function(e){
+  var touchobj = e.changedTouches[0]; // reference first touch point for this event  
+	goNE();
+  e.preventDefault();
+ }, false)
+ 
+ northclickdiv.addEventListener('touchend', function(e){
+  var touchobj = e.changedTouches[0]; // reference first touch point for this event  
+	goN();
+  e.preventDefault();
+ }, false)
+
+ nwclickdiv.addEventListener('touchend', function(e){
+  var touchobj = e.changedTouches[0]; // reference first touch point for this event  
+	goNW();
+  e.preventDefault();
+ }, false)
  
  
 }, false)
