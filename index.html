@@ -6,6 +6,41 @@
 
 <script src="js/jquery-1.10.2.min.js"></script>
 
+<script>
+ 
+window.addEventListener('load', function(){
+ 
+ var box1 = document.getElementById('box1')
+ var statusdiv = document.getElementById('statusdiv')
+ var startx = 0
+ var dist = 0
+ 
+ 
+ box1.addEventListener('touchstart', function(e){
+  var touchobj = e.changedTouches[0] // reference first touch point (ie: first finger)
+  startx = parseInt(touchobj.clientX) // get x position of touch point relative to left edge of browser
+  statusdiv.innerHTML = 'Status: touchstart<br /> ClientX: ' + startx + 'px'
+  e.preventDefault()
+ }, false)
+ 
+ box1.addEventListener('touchmove', function(e){
+  var touchobj = e.changedTouches[0] // reference first touch point for this event
+  var dist = parseInt(touchobj.clientX) - startx
+  statusdiv.innerHTML = 'Status: touchmove<br /> Horizontal distance traveled: ' + dist + 'px'
+  e.preventDefault()
+ }, false)
+ 
+ box1.addEventListener('touchend', function(e){
+  var touchobj = e.changedTouches[0] // reference first touch point for this event
+  statusdiv.innerHTML = 'Status: touchend<br /> Resting x coordinate: ' + touchobj.clientX + 'px'
+  e.preventDefault()
+ }, false)
+ 
+}, false)
+ 
+ 
+</script>
+
 <script language=javascript>
 
 mapsizey = 40;
@@ -589,7 +624,7 @@ function atStart()
 <div id='masterdiv' style='position:absolute; top:10px; left:10px; border-style:solid; border-width:1px; width:641px; height:884px; overflow: hidden; background-color:#000000;'>
 </div>
 
-<div id='debugdiv' style='position:absolute; top:10px; left:700px; width:300px; height:800; border-style:solid; border-width:1px; background-color:#ffffff'>
+<div id='debugdiv' style='position:absolute; top:200px; left:700px; width:300px; height:800; border-style:solid; border-width:1px; background-color:#ffffff'>
 </div>
 
 <div id='navdiv' style='position:absolute; top:20px; left:20px;'>
@@ -603,6 +638,13 @@ function atStart()
 </div>
 
 
+<div class="box" id="box1" style="position:absolute; top:10px; left:700px; z-index:10000; border-width:1px; border-style:solid;">
+<h3> Touch Me! </h3>
+</div>
+ 
+<div style="position:absolute; top:100px; left:700px; z-index:10000;">
+<h3 id="statusdiv">Status</h3>
+</div> 
 
 </body>
 </html>
