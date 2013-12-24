@@ -14,25 +14,28 @@ window.addEventListener('load', function(){
  var statusdiv = document.getElementById('statusdiv')
  var startx = 0
  var dist = 0
+ var nwclickdiv = document.getElementById('nwclickdiv');
+ var northclickdiv = document.getElementById('northclickdiv');
+ var neclickdiv = document.getElementById('neclickdiv');
+ var swclickdiv = document.getElementById('swclickdiv');
+ var southclickdiv = document.getElementById('southclickdiv');
+ var seclickdiv = document.getElementById('seclickdiv');
  
  
- box1.addEventListener('touchstart', function(e){
+ seclickdiv.addEventListener('touchstart', function(e){
   var touchobj = e.changedTouches[0] // reference first touch point (ie: first finger)
-  startx = parseInt(touchobj.clientX) // get x position of touch point relative to left edge of browser
-  statusdiv.innerHTML = 'Status: touchstart<br /> ClientX: ' + startx + 'px'
+  startx = parseInt(touchobj.clientX) // get x position of touch point relative to left edge of browser  
   e.preventDefault()
  }, false)
  
- box1.addEventListener('touchmove', function(e){
+ seclickdiv.addEventListener('touchmove', function(e){
   var touchobj = e.changedTouches[0] // reference first touch point for this event
-  var dist = parseInt(touchobj.clientX) - startx
-  statusdiv.innerHTML = 'Status: touchmove<br /> Horizontal distance traveled: ' + dist + 'px'
+  var dist = parseInt(touchobj.clientX) - startx  
   e.preventDefault()
  }, false)
  
- box1.addEventListener('touchend', function(e){
-  var touchobj = e.changedTouches[0]; // reference first touch point for this event
-  //statusdiv.innerHTML = 'Status: touchend<br /> Resting x coordinate: ' + touchobj.clientX + 'px';
+ seclickdiv.addEventListener('touchend', function(e){
+  var touchobj = e.changedTouches[0]; // reference first touch point for this event  
 	goSE();
   e.preventDefault();
  }, false)
@@ -628,19 +631,20 @@ function atStart()
 <div id='debugdiv' style='position:absolute; top:200px; left:700px; width:300px; height:800; border-style:solid; border-width:1px; background-color:#ffffff'>
 </div>
 
-<!--
+
 <div id='navdiv' style='position:absolute; top:20px; left:20px;'>
-<div id='nwclickdiv' style='background-color:blue; position:absolute; top:20px; left:0px; border-width:0px; border-style:solid; border-color:yellow; width:40px; height:40px; z-index:10000;' ontouch="goNW();"  ></div>
-<div id='northclickdiv' style='background-color:blue; position:absolute; top:0px; left:50px; border-width:0px; border-style:solid; border-color:orange; width:40px; height:40px; z-index:10000;' ontouch="goN();"  ></div>
-<div id='neclickdiv' style='background-color:blue; position:absolute; top:20px; left:100px; border-width:0px; border-style:solid; border-color:red; width:40px; height:40px; z-index:10000;' ontouch="goNE();"  ></div>
+<div class="box" id='nwclickdiv' style='background-color:blue; position:absolute; top:20px; left:0px; border-width:0px; border-style:solid; border-color:yellow; width:40px; height:40px; z-index:10000;'   ></div>
+<div class="box" id='northclickdiv' style='background-color:blue; position:absolute; top:0px; left:50px; border-width:0px; border-style:solid; border-color:orange; width:40px; height:40px; z-index:10000;'   ></div>
+<div class="box" id='neclickdiv' style='background-color:blue; position:absolute; top:20px; left:100px; border-width:0px; border-style:solid; border-color:red; width:40px; height:40px; z-index:10000;'   ></div>
 
-<div id='swclickdiv' style='background-color:blue; position:absolute; top:70px; left:0px; border-width:0px; border-style:solid; border-color:orange; width:40px; height:40px; z-index:10000;' ontouch="goSW();"  ></div>
-<div id='southclickdiv' style='background-color:blue; position:absolute; top:90px; left:50px; border-width:0px; border-style:solid; border-color:red; width:40px; height:40px; z-index:10000;' ontouch="goS();"  ></div>
-<div id='swclickdiv' style='background-color:blue; position:absolute; top:70px; left:100px; border-width:0px; border-style:solid; border-color:yellow; width:40px; height:40px; z-index:10000;' ontouch="goSE();"  ></div>
--->
+<div class="box" id='swclickdiv' style='background-color:blue; position:absolute; top:70px; left:0px; border-width:0px; border-style:solid; border-color:orange; width:40px; height:40px; z-index:10000;'   ></div>
+<div class="box" id='southclickdiv' style='background-color:blue; position:absolute; top:90px; left:50px; border-width:0px; border-style:solid; border-color:red; width:40px; height:40px; z-index:10000;'  ></div>
+<div class="box" id='seclickdiv' style='background-color:blue; position:absolute; top:70px; left:100px; border-width:0px; border-style:solid; border-color:yellow; width:40px; height:40px; z-index:10000;' ></div>
 
+<!--
 <div class="box" id="box1" style="background-color:blue; position:absolute; top:70px; left:0px; border-width:0px; border-style:solid; border-color:orange; width:40px; height:40px; z-index:10000;' ">
 </div>
+-->
 
 
 </div>
