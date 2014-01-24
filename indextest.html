@@ -1,0 +1,608 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<title>Untitled</title>
+
+<script src="js/jquery-1.10.2.min.js"></script>
+
+<script language=javascript>
+
+mapsizey = 40;
+mapsizex = 40;
+playerfacing = 0;
+mapx = 16;
+mapy = 19;
+oldmapx = mapx;
+oldmapy = mapy;
+oldshipx = mapx;
+oldshipy = mapy;
+mapmajoroffsetx = 304;
+mapmajoroffsety = 418;
+
+
+//40 wide
+//40 high
+var mapdata = ['Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Ocean','Ocean','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Sea','Deep Sea','Deep Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Sea','Sea','Sea','Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Sea','Reefs','Reefs','Sea','Sea','Sea','Sea','Reefs','Sea','Mountains','Sea','Sea','Sea','Sea','Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Sea','Sea','Reefs','Sea','Sea','Sea','Rocky Desert','Sea','Reefs','Sea','Mountains','Mountains','Sea','Sea','Sea','Sea','Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Sea','Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Sea','Sea','Sea','Sea','Sea','Rocky Desert','Rocky Desert','Rocky Desert','Sea','Sea','Sea','Mountains','Mountains','Fungal Forest','Fungal Forest','Fungal Forest','Sea','Sea','Deep Sea','Sea','Sea','Reefs','Reefs','Sea','Sea','Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Deep Sea','Sea','Sea','Jungle Mountains','Sea','Sea','Mountains','Rocky Desert','Rocky Desert','Rocky Desert','Rocky Desert','Sea','Mountains','Mountains','Mountains','Fungal Forest','Fungal Forest','Heavy Fungal Forest','Heavy Fungal Forest','Sea','Sea','Sea','Sea','Sea','Reefs','Sea','Rocky Desert','Rocky Desert','Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Deep Sea','Sea','Sea','Sea','Sea','Sea','Sea','Sea','Farmland','Rocky Desert','Rocky Desert','Rocky Desert','Sea','Sea','Sea','Mountains','Mountains','Heavy Fungal Forest','Heavy Fungal Forest','Fungal Forest','Fungal Forest','Jungle','Sea','Sea','Sea','Sea','Rocky Desert','Rocky Desert','Rocky Desert','Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Deep Sea','Sea','Sea','Mountains','Sea','Sea','Sea','Sea','Farmland','Farmland','Farmland','Farmland','Farmland','Sea','Sea','Sea','Mountains','Heavy Fungal Forest','Farmland','Dead Forest Mountains','Fungal Forest','Jungle','Jungle','Jungle','Sea','Sea','Rocky Desert','Rocky Desert','Light Jungle','Sea','Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Deep Sea','Sea','Reefs','Sea','Mountains','Mountains','Sea','Jungle Mountains','Sea','Sea','Sea','Farmland','Farmland','Farmland','Farmland','Sea','Sea','Sea','Mountains','Heavy Fungal Forest','Heavy Fungal Forest','Fungal Forest','Fungal Forest','Jungle','Jungle','Jungle','Light Jungle','Jungle','Marsh','Marsh','Marsh','Marsh','Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Sea','Reefs','Sea','Mountains','Rocky Desert','Rocky Desert','Jungle Mountains','Sea','Sea','Sea','Sea','Sea','Farmland','Farmland','Sea','Sea','Reefs','Sea','Mountains','Heavy Fungal Forest','Heavy Fungal Forest','Heavy Fungal Forest','Sea','Sea','Sea','Light Jungle','Jungle','Jungle','Jungle','Marsh','Marsh','Marsh','Sea','Deep Sea','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Sea','Sea','Sea','Sea','Mountains','Mountains','Rocky Desert','Jungle Mountains','Rocky Desert','Rocky Desert','Sea','Sea','Sea','Sea','Farmland','Farmland','Sea','Reefs','Sea','Sea','Forested Mountains','Heavy Fungal Forest','Forested Mountains','Sea','Sea','Sea','Light Jungle','Jungle','Jungle','Jungle','Marsh','Sea','Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Deep Sea','Sea','Sea','Sea','Mountains','Mountains','Sea','Sea','Rocky Desert','Jungle Mountains','Rocky Desert','Rocky Desert','Rocky Desert','Rocky Desert','Sea','Sea','Farmland','Farmland','Farmland','Sea','Reefs','Sea','Forested Mountains','Forested Mountains','Forested Mountains','Sea','Sea','Sea','Jungle','Jungle','Jungle Hills','Jungle Hills','Jungle Hills','Sea','Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Deep Sea','Sea','Marsh','Sea','Mountains','Mountains','Sea','Sea','Jungle Mountains','Jungle Mountains','Jungle Mountains','Light Jungle','Rocky Desert','Rocky Desert','Sea','Sea','Sea','Sea','Sea','Sea','Sea','Sea','Sea','Sea','Sea','Sea','Sea','Jungle','Jungle','Jungle','Jungle Hills','Jungle Hills','Sea','Sea','Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Sea','Marsh','Mountains','Sea','Sea','Sea','Light Jungle','Light Jungle','Light Jungle','Light Jungle','Light Jungle','Light Jungle','Light Jungle','Light Jungle','Sea','Sea','Sea','Sea','Sea','Sea','Sea','Sea','Sea','Light Jungle','Sea','Jungle','Jungle','Jungle Hills','Jungle Hills','Jungle Hills','Sea','Sea','Sea','Sea','Deep Sea','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Sea','Sea','Sea','Sea','Sea','Sea','Light Jungle','Light Jungle','Light Jungle','Light Jungle','Light Jungle','Light Jungle','Light Jungle','Light Jungle','Farmland','Farmland','Sea','Sea','Rocky Desert','Rocky Desert','Rocky Desert','Sea','Sea','Light Jungle','Sea','Sea','Sea','Jungle Hills','Jungle Hills','Jungle Hills','Sea','Sea','Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Sea','Sea','Sea','Light Jungle','Sea','Sea','Light Jungle','Light Jungle','Light Jungle','Light Jungle','Light Jungle','Light Jungle','Jungle Hills','Farmland','Farmland','Mountains','Sea','Sea','Rocky Desert','Rocky Desert','Rocky Desert','Forested Hills','Sea','Sea','Sea','Sea','Sea','Sea','Hills','Hills','Hills','Hills','Hills','Hills','Deep Sea','Ocean','Ocean','Ocean','Lava','Mountain','Deep Sea','Sea','Light Jungle','Light Jungle','Light Jungle','Sea','Sea','Sea','Sea','Light Jungle','Light Jungle','Jungle Hills','Farmland','Farmland','Farmland','Mountains','Mountains','Jungle','Jungle','Light Jungle','Light Jungle','Farmland','Sea','Sea','Sea','Sea','Sea','Sea','Hills','Hills','Hills','Hills','Hills','Deep Sea','Ocean','Ocean','Ocean','Ocean','Mountain','Volcano','Mountain','Deep Sea','Sea','Light Jungle','Sea','Light Jungle','Sea','Sea','Sea','Sea','Jungle','Jungle','Jungle Hills','Jungle Mountains','Jungle Mountains','Jungle Hills','Jungle','Jungle','Jungle','Light Jungle','Light Jungle','Forested Hills','Sea','Sea','Reefs','Reefs','Reefs','Sea','Sea','Hills','Hills','Hills','Hills','Deep Sea','Ocean','Ocean','Ocean','Deep Sea','Mountain','Volcano','Lava','Sea','Sea','Jungle','Sea','Light Jungle','Sea','Sea','Sea','Jungle','Jungle','Jungle Hills','Jungle Mountains','Volcano','Jungle Mountains','Jungle Hills','Jungle','Jungle','Light Jungle','Light Jungle','Light Jungle','Sea','Sea','Reefs','Reefs','Sea','Sea','Sea','Sea','Hills','Hills','Hills','Deep Sea','Ocean','Ocean','Ocean','Ocean','Ocean','Deep Sea','Mountain','Mountain','Sea','Sea','Jungle','Jungle','Sea','Sea','Sea','Sea','Jungle','Jungle','Jungle Hills','Jungle Mountains','Volcano','Volcano','Lava','Jungle Hills','Jungle Hills','Light Jungle','Light Jungle','Light Jungle','Sea','Sea','Reefs','Reefs','Sea','Sea','Sea','Hills','Hills','Hills','Hills','Hills','Deep Sea','Ocean','Ocean','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Sea','Sea','Jungle','Sea','Light Jungle','Sea','Sea','Mountains','Jungle','Jungle','Marsh','Jungle Mountains','Lava','Lava','Lava','Lava','Jungle Hills','Jungle Hills','Jungle Hills','Sea','Sea','Sea','Sea','Sea','Sea','Sea','Sea','Hills','Hills','Hills','Deep Sea','Deep Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Deep Sea','Sea','Sea','Light Jungle','Light Jungle','Sea','Sea','Sea','Mountains','Jungle','Jungle','Marsh','Swamp','Swamp','Jungle Mountains','Jungle Hills','Jungle Hills','Lava','Lava','Lava','Sea','Sea','Sea','Sea','Sea','Sea','Sea','Sea','Sea','Hills','Grassy Hills','Deep Sea','Hills','Deep Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Deep Sea','Sea','Sea','Light Jungle','Light Jungle','Light Jungle','Light Jungle','Sea','Sea','Sea','Jungle','Jungle','Sea','Swamp','Swamp','Marsh','Light Jungle','Jungle Hills','Jungle Hills','Lava','Sea','Sea','Sea','Jungle Hills','Jungle Hills','Jungle Hills','Hills','Hills','Sea','Sea','Sea','Grassy Hills','Grassy Hills','Hills','Deep Sea','Ocean','Ocean','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Sea','Light Jungle','Light Jungle','Light Jungle','Light Jungle','Sea','Mountains','Sea','Sea','Sea','Sea','Swamp','Swamp','Marsh','Light Jungle','Light Jungle','Light Jungle','Jungle Hills','Sea','Sea','Sea','Jungle Hills','Jungle Hills','Hills','Hills','Hills','Hills','Hills','Hills','Hills','Hills','Hills','Deep Sea','Deep Sea','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Sea','Light Jungle','Light Jungle','Sea','Sea','Sea','Sea','Mountains','Sea','Sea','Sea','Sea','Marsh','Marsh','Light Jungle','Light Jungle','Light Jungle','Light Jungle','Sea','Sea','Sea','Sea','Badlands','Badlands','Badlands','Hills','Hills','Hills','Hills','Hills','Hills','Hills','Hills','Hills','Deep Sea','Ocean','Ocean','Ocean','Ocean','Deep Sea','Sea','Sea','Light Jungle','Light Jungle','Sea','Sea','Sea','Mountains','Sea','Sea','Reefs','Sea','Light Jungle','Light Jungle','Light Jungle','Light Jungle','Light Jungle','Sea','Sea','Sea','Jungle Hills','Jungle Hills','Badlands','Badlands','Badlands','Badlands','Badlands','Badlands','Badlands','Badlands','Grassland','Grassland','Light Jungle','Hills','Deep Sea','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Sea','Sea','Sea','Sea','Sea','Sea','Sea','Sea','Sea','Reefs','Sea','Sea','Sea','Light Jungle','Light Jungle','Light Jungle','Light Jungle','Sea','Sea','Sea','Sea','Jungle Hills','Badlands','Badlands','Badlands','Badlands','Badlands','Full Badlands','Full Badlands','Badlands','Grassland','Grassland','Light Jungle','Deep Sea','Ocean','Ocean','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Sea','Light Jungle','Sea','Forested Mountains','Forested Mountains','Forested Mountains','Farmland','Sea','Sea','Reefs','Sea','Sea','Sea','Light Jungle','Light Jungle','Reefs','Sea','Sea','Sea','Sea','Jungle Hills','Jungle Hills','Sea','Sea','Sea','Sea','Badlands','Full Badlands','Full Badlands','Grassland','Badlands','Badlands','Light Jungle','Deep Sea','Deep Sea','Ocean','Ocean','Ocean','Deep Sea','Light Jungle','Sea','Sea','Sea','Sea','Sea','Farmland','Heavy Forest','Rocky Desert','Sea','Sea','Light Jungle','Light Jungle','Light Jungle','Light Jungle','Light Jungle','Light Jungle','Sea','Sea','Reefs','Reefs','Sea','Sea','Sea','Sea','Sea','Sea','Badlands','Badlands','Badlands','Grassland','Badlands','Badlands','Deep Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Light Jungle','Light Jungle','Sea','Sea','Sea','Sea','Heavy Forest','Rocky Desert','Sea','Sea','Sea','Light Jungle','Light Jungle','Sea','Reefs','Sea','Sea','Deep Sea','Reefs','Jungle Hills','Reefs','Reefs','Sea','Sea','Sea','Sea','Badlands','Badlands','Grassland','Grassland','Grassland','Deep Sea','Deep Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Light Jungle','Light Jungle','Deep Sea','Deep Sea','Sea','Farmland','Sea','Sea','Sea','Sea','Sea','Sea','Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Reefs','Jungle Hills','Jungle Hills','Reefs','Sea','Sea','Sea','Sea','Badlands','Grassland','Grassland','Grassland','Deep Sea','Deep Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Reefs','Reefs','Reefs','Reefs','Sea','Deep Sea','Deep Sea','Kelp Forest','Kelp Forest Heavy','Kelp Forest','Deep Sea','Reefs','Jungle Hills','Reefs','Reefs','Sea','Sea','Jungle Hills','Jungle Hills','Jungle Hills','Grassland','Grassland','Deep Sea','Deep Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Reefs','Reefs','Reefs','Reefs','Reefs','Deep Sea','Kelp Forest Heavy','Kelp Forest Heavy','Kelp Forest Heavy','Kelp Forest','Reefs','Jungle Hills','Reefs','Sea','Sea','Jungle Hills','Jungle Hills','Jungle Hills','Jungle Hills','Jungle Hills','Deep Sea','Deep Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Kelp Forest','Kelp Forest','Deep Sea','Deep Sea','Reefs','Reefs','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Deep Sea','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Deep Sea','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean','Ocean'];
+
+mapfogon = true;
+var mapfog = new Array();
+for (x=0; x<100; x++)
+{
+  mapfog[x] = new Array();
+}
+
+for (y=0; y<100; y++)
+{
+  for (x=0; x<100; x++)
+	{
+	  mapfog[y][x] = true;
+	}
+}
+inshipmode = true;
+
+function isOdd(num) { return num % 2;}
+
+function moveMap()
+{
+  
+	offsetx = mapmajoroffsetx - mapx * 19;
+	offsety = mapmajoroffsety - mapy * 22;
+	if (isOdd(mapx) == true)
+	{
+	  offsety = offsety - 11;
+	}
+	offsetx = offsetx + "px";
+	offsety = offsety + "px";
+	document.getElementById("mapdiv").style.left = offsetx;
+	document.getElementById("mapdiv").style.top = offsety;
+}
+
+function drawHexMap()
+{
+		 
+	ycount = 0;
+	xcount = 0;
+	
+	for (x=0; x<1600; x++)
+	{
+	  tvar = "maptile"+ycount+"-"+xcount;
+	  zvar = mapdata[x].toLowerCase();
+	  fvar = "tiles/hexes/" + zvar + ".png";
+          //fvar = "tiles/hexes/ocean.png";
+          //fvar = "tiles/hexes/" + mapdata[0] + ".png";
+          //zvar = "ocean.png";
+          //fvar = "tiles/hexes/" + zvar;
+          //alert(fvar);
+		document.getElementById(tvar).src = fvar;
+		ycount = ycount + 1;
+		if (ycount >= mapsizey)
+		{
+		  ycount = 0;
+			xcount = xcount + 1;
+		}		
+	}
+	
+	pstartx = 16 * 19;
+	pstarty = 19 * 22;
+	pstartx = pstartx + "px";
+	pstarty = pstarty + "px";
+	document.getElementById("shipsprite").style.top = pstarty;
+	document.getElementById("shipsprite").style.left = pstartx;
+		
+		  
+}
+
+function buildMap()
+{
+  tvar = "";
+	xcount = 0;
+	ymod = 11;
+	tvar = tvar + "<div id='mapdiv' style='position:absolute; top:0px; left:0px;'>";
+  for (y=0; y<mapsizey; y++)
+	{
+	  for (x=0; x<mapsizex; x++)
+		{
+		  if (ymod == 11)
+			{
+			  ymod = 0;
+			}
+			else
+			  {
+				  ymod = 11;
+				}
+		  xvar = x * 19;
+			yvar = y * 22 + ymod;
+			
+                    //xpos = x * 32 - player32x + (9 * 32);// +mapoffsetx;
+                    //ypos = y * 32 - player32y + (6 * 32);// +mapoffsety;
+                    //my = layery[backgroundlayer, y, x] * 32;
+                    //mx = layerx[backgroundlayer, y, x] * 32;
+                    //spriteBatch.Draw(tilemap2, new Rectangle(xpos, ypos, 32, 32), new Rectangle(mx, my, 32, 32), Color.White);
+			
+			//fvar = "tiles/hexes/" + mapdata[y*mapsizey+x] + ".png";
+			//if (mapdata[y*mapsizey+x] == "Dead Forest Mountains")
+			//{
+			//  alert(y*mapsizey+x);
+			//	alert(x + ", " + y);
+			//}
+			
+		  tvar = tvar + "<img id='maptile"+y+"-"+x+"' src='tiles/hexes/badlands.png' style='position:absolute; left:"+xvar+"px; top:"+yvar+"px; z-index:10;'>";
+			//tvar = tvar + "<img id='maptile"+y+"-"+x+"' src='"+fvar+"' style='position:absolute; left:"+xvar+"px; top:"+yvar+"px;'>";
+			
+			if (mapfogon == true)
+			{
+			  tvar = tvar + "<img id='mapfog"+y+"-"+x+"' src='tiles/hexes/black.png' style='position:absolute; left:"+xvar+"px; top:"+yvar+"px; z-index:20;'>";
+			}
+			
+		}
+	}
+	
+	tvar = tvar + "<img id='oldshipsprite' src='tiles/hexes/redship.png' style='position:absolute; top:10px; left:10px; z-index:15;'>";
+	
+	tvar = tvar + "</div>";
+	
+	
+	
+	tvar = tvar + "<img id='shipsprite' src='tiles/hexes/redship.png' style='position:absolute; top:10px; left:10px; z-index:15;'>";
+	
+	document.getElementById("masterdiv").innerHTML = tvar;
+	
+	/*
+	ycount = 0;
+	xcount = 0;
+	for (x=0; x<1600; x++)
+	{
+	  tvar = "maptile"+ycount+"-"+xcount;
+	  fvar = "tiles/hexes/" + mapdata[x] + ".png";
+		document.getElementById(tvar).src = fvar;
+		ycount = ycount + 1;
+		if (ycount >= mapsizey)
+		{
+		  ycount = 0;
+			xcount = xcount + 1;
+		}		
+	}
+	*/
+	
+	
+	
+}
+
+function revealMap()
+{
+  for (y=0; y<mapsizey; y++)
+	{
+	  for (x=0; x<mapsizex; x++)
+		{
+		  mapfog[y][x] = false;		
+	    fvar = "mapfog"+y+"-"+x;
+	    document.getElementById(fvar).style.display = "none";							
+		}
+	}
+	checkMove();
+	moveMap();
+	revealFog();
+}
+
+function checkMove()
+{
+  if ((mapx < 0) || (mapx >= mapsizex))
+	{
+    mapx = oldmapx;		
+	}
+  if ((mapy < 0) || (mapy >= mapsizey))
+  {
+    mapy = oldmapy;
+	}
+	
+	xvar = mapy + (mapx * 40);
+	
+	simage = "tiles/hexes/redplayer.png";
+	if ((mapdata[xvar] == "Sea") || (mapdata[xvar] == "Deep Sea") || (mapdata[xvar] == "Ocean") || (mapdata[xvar] == "Kelp Forest") || (mapdata[xvar] == "Kelp Forest Heavy") || (mapdata[xvar] == "Reefs"))
+	{
+	  if (inshipmode == false)
+		{
+		  goodmove = false;
+		  //check if hitting old boat
+			if ((mapx == oldshipx) && (mapy == oldshipy))
+			{
+			  goodmove = true;
+			}
+			if (goodmove == false)
+			{
+			  mapx = oldmapx;
+				mapy = oldmapy;
+			}
+			else
+			  {
+				  inshipmode = true;
+					oldshipx = mapx;
+					oldshipy = mapy;
+					simage = "tiles/hexes/redship.png";
+				}
+		}
+		else
+		  {
+	      simage = "tiles/hexes/redship.png";		
+				oldshipx = mapx;
+				oldshipy = mapy;   
+		  }
+	}
+	else
+	  {
+		  inshipmode = false;			
+		}
+	document.getElementById("shipsprite").src = simage;
+	
+  avar = "maptile"+oldshipy+"-"+oldshipx;
+	ax = document.getElementById(avar).style.left;
+	ay = document.getElementById(avar).style.top;
+			
+	document.getElementById("oldshipsprite").style.top = ay;
+	document.getElementById("oldshipsprite").style.left = ax;
+}
+
+document.addEventListener('keyup', function(event) {
+
+		oldmapx = mapx;
+	  oldmapy = mapy;
+		//alert(event.keyCode);
+
+		if (event.keyCode == 82)
+		{
+		  //r - reveal map
+			revealMap();
+			/*			
+			for (y=0; y<mapsizey; y++)
+			{
+			  for (x=0; x<mapsizex; x++)
+				{
+				  mapfog[y][x] = false;		
+	        fvar = "mapfog"+y+"-"+x;
+	        document.getElementById(fvar).style.display = "none";							
+				}
+			}
+			checkMove();
+			moveMap();
+			revealFog();
+			*/
+    }		
+		
+		if (event.keyCode == 99)
+		{
+		  //southeast
+			goSE();
+			/*
+			if (isOdd(mapx) == true)
+			{
+		    mapx = mapx + 1;
+			  mapy = mapy + 1;																			
+			}
+			else
+			  {
+		      mapx = mapx + 1;
+			    mapy = mapy + 0;			
+				}
+			playerfacing = 1;
+			//positionMap();
+			checkMove();
+			moveMap();
+			revealFog();
+			*/
+		}
+		if (event.keyCode == 103)
+		{
+		  //northwest
+			goNW();
+			/*
+			if (isOdd(mapx) == true)
+			{
+		    mapx = mapx - 1;
+			  mapy = mapy - 0;			  
+			}
+			else
+			  {
+		      mapx = mapx - 1;
+			    mapy = mapy - 1;				
+				}
+			playerfacing = 2;
+			//positionMap();
+			checkMove();
+			moveMap();
+			revealFog();
+      */			
+		}
+		if (event.keyCode == 105)
+		{
+		  //northeast
+			goNE();
+			/*
+			if (isOdd(mapx) == true)
+			{
+		    mapx = mapx + 1;
+			  mapy = mapy + 0;																										
+			}
+			else
+			  {
+		      mapx = mapx + 1;
+			    mapy = mapy - 1;				
+				}
+			playerfacing = 3;
+			//positionMap();
+			checkMove();
+			moveMap();
+			revealFog();
+			*/
+		}
+		if (event.keyCode == 97)
+		{
+		  //southwest
+			goSW();
+			/*
+			if (isOdd(mapx) == true)
+			{
+		    mapx = mapx - 1;
+			  mapy = mapy + 1;																			
+			}
+			else
+			  {
+		      mapx = mapx - 1;
+			    mapy = mapy + 0;			
+				}
+			playerfacing = 0;
+			//positionMap();
+			checkMove();
+			moveMap();
+			revealFog();
+			*/
+		}
+		if ((event.keyCode == 98) || (event.keyCode == 40))
+		{
+		  //south
+			goS();
+			/*
+		  mapx = mapx + 0;
+			mapy = mapy + 1;
+			playerfacing = 1;
+			//positionMap();
+			checkMove();
+			moveMap();
+			revealFog();
+			*/
+		}
+		if ((event.keyCode == 104) || (event.keyCode == 38))
+		{
+		  //north
+			goN();
+			/*
+		  mapx = mapx + 0;
+			mapy = mapy - 1;
+			playerfacing = 2;
+			//positionMap();
+			checkMove();
+			moveMap();
+			revealFog();
+			*/
+		}
+		/*
+		if ((event.keyCode == 100) || (event.keyCode == 37))
+		{
+		  //west
+		  mapx = mapx - 1;
+			mapy = mapy + 1;
+			playerfacing = 0;
+			positionMap();
+			drawMap();
+		}
+		if ((event.keyCode == 102) || (event.keyCode == 39))
+		{
+		  //east
+		  mapx = mapx + 1;
+			mapy = mapy - 1;
+			playerfacing = 3;
+			positionMap();
+			drawMap();
+		}	
+		*/
+		showDebug();
+		
+});
+
+
+function showDebug()
+{
+  tvar = "";
+	tvar = tvar + "mapx: " + mapx + "<BR>";
+	tvar = tvar + "mapy: " + mapy + "<BR>";
+	
+	xvar = mapy + (mapx * 40);
+	tvar = tvar + "tile: " + mapdata[xvar] + "<BR>";
+	
+	tvar = tvar + "oldshipx: " + oldshipx + "<BR>";
+	tvar = tvar + "oldshipy: " + oldshipy + "<BR>";
+		
+	avar = "maptile"+oldshipy+"-"+oldshipx;
+	ax = parseInt(document.getElementById(avar).style.left);
+	ay = parseInt(document.getElementById(avar).style.top);
+	tvar = tvar + "tilex: " + ax + "<BR>";
+	tvar = tvar + "tiley: " + ay + "<BR>";	
+
+	zy = document.getElementById("oldshipsprite").style.top;
+	zx = document.getElementById("oldshipsprite").style.left;
+	tvar = tvar + "osx: " + zx + "<BR>";
+	tvar = tvar + "osy: " + zy + "<BR>";	
+	
+	tvar = tvar + "<input type='button' onclick=revealMap() value='Reveal Map' ><BR>"
+        tvar = tvar + "<input type='button' onclick=drawHexMap() value='hexdraw' ><BR>"
+        tvar = tvar + "<input type='button' onclick=goNE() value='go NE' ><BR>zzz"
+
+	
+	document.getElementById("debugdiv").innerHTML = tvar;
+}
+
+
+function goNE()
+{
+  oldmapx = mapx;
+	oldmapy = mapy;
+  if (isOdd(mapx) == true)
+	{
+    mapx = mapx + 1;
+	  mapy = mapy + 0;																										
+	}
+	else
+	  {
+		  mapx = mapx + 1;
+			mapy = mapy - 1;				
+		}
+	playerfacing = 3;
+	checkMove();
+	moveMap();
+	revealFog();
+}
+
+function goSE()
+{
+  oldmapx = mapx;
+	oldmapy = mapy;
+  if (isOdd(mapx) == true)
+	{
+	  mapx = mapx + 1;
+	  mapy = mapy + 1;																			
+	}
+	else
+	{
+	  mapx = mapx + 1;
+		mapy = mapy + 0;			
+	}
+	playerfacing = 1;
+	checkMove();
+	moveMap();
+	revealFog();
+}
+
+function goNW()
+{
+  oldmapx = mapx;
+	oldmapy = mapy;
+  if (isOdd(mapx) == true)
+	{
+	  mapx = mapx - 1;
+	  mapy = mapy - 0;			  
+	}
+	else
+	  {
+		  mapx = mapx - 1;
+			mapy = mapy - 1;				
+		}
+	playerfacing = 2;
+	checkMove();
+	moveMap();
+	revealFog();
+}
+
+function goSW()
+{
+  oldmapx = mapx;
+	oldmapy = mapy;
+  if (isOdd(mapx) == true)
+	{
+	  mapx = mapx - 1;
+	  mapy = mapy + 1;																			
+	}
+	else
+	  {
+		  mapx = mapx - 1;
+			mapy = mapy + 0;			
+		}
+	playerfacing = 0;
+	checkMove();
+	moveMap();
+	revealFog();
+}
+
+function goS()
+{
+  oldmapx = mapx;
+	oldmapy = mapy;
+  mapx = mapx + 0;
+	mapy = mapy + 1;
+	playerfacing = 1;
+	checkMove();
+	moveMap();
+	revealFog();
+}
+
+function goN()
+{
+  oldmapx = mapx;
+	oldmapy = mapy;
+  mapx = mapx + 0;
+	mapy = mapy - 1;
+	playerfacing = 2;
+	checkMove();
+	moveMap();
+	revealFog();
+}
+
+function eraseFog(fy,fx)
+{
+  if ((fy >= 0) && (fy < mapsizey) && (fx >= 0) && (fx < mapsizex))
+	{
+    mapfog[fy][fx] = false;
+	  tvar = "mapfog"+fy+"-"+fx;
+	  document.getElementById(tvar).style.display = "none";
+	}  
+}
+
+function revealFog()
+{
+
+  eraseFog(mapy,mapx);
+	eraseFog(mapy-1,mapx);
+	eraseFog(mapy+1,mapx);
+	if (isOdd(mapx) == true) {eraseFog(mapy+0,mapx-1);} else {eraseFog(mapy-1,mapx-1);}	
+	if (isOdd(mapx) == true) {eraseFog(mapy+1,mapx+1);} else {eraseFog(mapy+0,mapx+1);}
+	if (isOdd(mapx) == true) {eraseFog(mapy+1,mapx-1);} else {eraseFog(mapy+0,mapx-1);}	
+	if (isOdd(mapx) == true) {eraseFog(mapy-0,mapx+1);} else {eraseFog(mapy-1,mapx+1);}
+	
+		
+	
+	
+}
+
+function atStart()
+{
+  buildMap();
+  drawHexMap();
+	moveMap();
+	revealFog();
+  showDebug();
+}
+
+</script>
+
+</head>
+<body onload=atStart()>
+
+<div id='masterdiv' style='position:absolute; top:10px; left:10px; border-style:solid; border-width:1px; width:641px; height:884px; overflow: hidden; background-color:#000000;'>
+</div>
+
+<div id='debugdiv' style='position:absolute; top:10px; left:700px; width:300px; height:800; border-style:solid; border-width:1px; background-color:#ffffff'>
+</div>
+
+<div id='navdiv' style='position:absolute; top:20px; left:20px;'>
+<div id='nwclickdiv' style='background-color:blue; position:absolute; top:20px; left:0px; border-width:0px; border-style:solid; border-color:yellow; width:40px; height:40px; z-index:10000;' onclick="goNW();"  ></div>
+<div id='northclickdiv' style='background-color:blue; position:absolute; top:0px; left:50px; border-width:0px; border-style:solid; border-color:orange; width:40px; height:40px; z-index:10000;' onclick="goN();"  ></div>
+<div id='neclickdiv' style='background-color:blue; position:absolute; top:20px; left:100px; border-width:0px; border-style:solid; border-color:red; width:40px; height:40px; z-index:10000;' onclick="goNE();"  ></div>
+
+<div id='swclickdiv' style='background-color:blue; position:absolute; top:70px; left:0px; border-width:0px; border-style:solid; border-color:orange; width:40px; height:40px; z-index:10000;' onclick="goSW();"  ></div>
+<div id='southclickdiv' style='background-color:blue; position:absolute; top:90px; left:50px; border-width:0px; border-style:solid; border-color:red; width:40px; height:40px; z-index:10000;' onclick="goS();"  ></div>
+<div id='swclickdiv' style='background-color:blue; position:absolute; top:70px; left:100px; border-width:0px; border-style:solid; border-color:yellow; width:40px; height:40px; z-index:10000;' onclick="goSE();"  ></div>
+</div>
+
+
+
+</body>
+</html>
